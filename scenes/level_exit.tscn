@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://07auma4cdjp"]
+
+[ext_resource type="Script" uid="uid://bffbtkufr4wjh" path="res://scripts/level_exit.gd" id="1_lpw2s"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_lpw2s"]
+size = Vector2(651, 446)
+
+[node name="level_exit" type="Area2D"]
+light_mask = 2
+visibility_layer = 0
+script = ExtResource("1_lpw2s")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(315.5, 213)
+shape = SubResource("RectangleShape2D_lpw2s")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

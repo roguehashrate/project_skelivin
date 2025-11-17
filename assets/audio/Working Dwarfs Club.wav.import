@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://dqa5ypn50qe03"
+path="res://.godot/imported/Working Dwarfs Club.wav-11838651e0c3d35201abfb5c7e1abe35.sample"
+
+[deps]
+
+source_file="res://assets/audio/Working Dwarfs Club.wav"
+dest_files=["res://.godot/imported/Working Dwarfs Club.wav-11838651e0c3d35201abfb5c7e1abe35.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

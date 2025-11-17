@@ -1,0 +1,86 @@
+[gd_scene load_steps=5 format=3 uid="uid://dqqeja6mh50tr"]
+
+[ext_resource type="Script" uid="uid://cer1eamx7g183" path="res://scenes/hud.gd" id="1_5ysmq"]
+[ext_resource type="Texture2D" uid="uid://b1tonf6uf0cwq" path="res://assets/Rocky Roads/UI/big_heart.png" id="1_ahhtf"]
+[ext_resource type="Texture2D" uid="uid://mdwqwl87hiwf" path="res://assets/Rocky Roads/UI/little_heart.png" id="2_oo0fn"]
+[ext_resource type="Texture2D" uid="uid://kuaknbvhsv4k" path="res://assets/Rocky Roads/UI/0.png" id="4_6fi6k"]
+
+[node name="HUD" type="CanvasLayer" groups=["ui"]]
+script = ExtResource("1_5ysmq")
+
+[node name="Heart4" type="TextureRect" parent="." groups=["ui"]]
+anchors_preset = -1
+anchor_left = 0.019097222
+anchor_top = 0.016975308
+anchor_right = 0.053819444
+anchor_bottom = 0.0787037
+offset_right = 14.6111145
+offset_bottom = 13.530869
+size_flags_horizontal = 0
+size_flags_vertical = 0
+texture = ExtResource("1_ahhtf")
+metadata/_edit_use_anchors_ = true
+
+[node name="Heart3" type="TextureRect" parent="." groups=["ui"]]
+anchors_preset = -1
+anchor_left = 0.050347224
+anchor_top = 0.018518519
+anchor_right = 0.08506945
+anchor_bottom = 0.08024691
+offset_left = 10.0
+offset_right = 24.611115
+offset_bottom = 13.530857
+size_flags_horizontal = 0
+size_flags_vertical = 0
+texture = ExtResource("2_oo0fn")
+metadata/_edit_use_anchors_ = true
+
+[node name="Heart2" type="TextureRect" parent="." groups=["ui"]]
+anchors_preset = -1
+anchor_left = 0.07899305
+anchor_top = 0.020061728
+anchor_right = 0.113715276
+anchor_bottom = 0.08179013
+offset_left = 20.0
+offset_right = 34.611115
+offset_bottom = 13.530865
+size_flags_horizontal = 0
+size_flags_vertical = 0
+texture = ExtResource("2_oo0fn")
+metadata/_edit_use_anchors_ = true
+
+[node name="Heart1" type="TextureRect" parent="." groups=["ui"]]
+anchors_preset = -1
+anchor_left = 0.10763889
+anchor_top = 0.020061728
+anchor_right = 0.1423611
+anchor_bottom = 0.08179013
+offset_left = 31.0
+offset_right = 45.6111
+offset_bottom = 13.530865
+size_flags_horizontal = 0
+size_flags_vertical = 0
+texture = ExtResource("2_oo0fn")
+metadata/_edit_use_anchors_ = true
+
+[node name="Digit1" type="TextureRect" parent="." groups=["ui"]]
+anchors_preset = -1
+anchor_left = 0.8897569
+anchor_top = 0.027777778
+anchor_right = 0.9279514
+anchor_bottom = 0.095679015
+grow_horizontal = 0
+texture = ExtResource("4_6fi6k")
+metadata/_edit_use_anchors_ = true
+
+[node name="Digit2" type="TextureRect" parent="." groups=["ui"]]
+anchors_preset = -1
+anchor_left = 0.9348958
+anchor_top = 0.027777778
+anchor_right = 0.9730903
+anchor_bottom = 0.095679015
+grow_horizontal = 0
+texture = ExtResource("4_6fi6k")
+metadata/_edit_use_anchors_ = true
+
+[connection signal="visibility_changed" from="." to="." method="_on_visibility_changed"]
