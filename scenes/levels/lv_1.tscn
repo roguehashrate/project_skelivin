@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://dsggfn1u1ve5u"]
+[gd_scene load_steps=20 format=3 uid="uid://dsggfn1u1ve5u"]
 
 [ext_resource type="Texture2D" uid="uid://hi7a82axfwru" path="res://assets/Rocky Roads/Tilesets/tileset_dirt.png" id="2_40bdt"]
 [ext_resource type="PackedScene" uid="uid://cgjj2bmatef67" path="res://scenes/player.tscn" id="3_0b2at"]
@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://hfaswl2lv72h" path="res://scenes/enemy_1.tscn" id="8_enh10"]
 [ext_resource type="Texture2D" uid="uid://dbssee6wme0qm" path="res://assets/grey_bg_filler.png" id="9_5xxpt"]
 [ext_resource type="Texture2D" uid="uid://dli6h3ngi6041" path="res://assets/PixelFantasy_Caves_1.0/background4a.png" id="10_pb05x"]
+[ext_resource type="PackedScene" uid="uid://cdemkumdnf114" path="res://scenes/gem.tscn" id="11_40bdt"]
 [ext_resource type="PackedScene" uid="uid://07auma4cdjp" path="res://scenes/level_exit.tscn" id="11_fgsb4"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_lnu2h"]
@@ -283,3 +284,6 @@ texture = ExtResource("10_pb05x")
 position = Vector2(1073, -475)
 collision_layer = 2
 collision_mask = 2
+
+[node name="Gem" parent="." instance=ExtResource("11_40bdt")]
+position = Vector2(494, -49)

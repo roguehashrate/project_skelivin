@@ -192,9 +192,9 @@ func _die():
 
 	# Reset all coins on the map
 	for coin in get_tree().get_nodes_in_group("coins"):
-		coin.show()
-		if coin.has_node("CollisionShape2D"):
-			coin.get_node("CollisionShape2D").disabled = false
+		if coin.has_method("reset_coin"):
+			coin.reset_coin()
+
 
 func _on_death_finished():
 	# Reset health
