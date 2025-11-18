@@ -9,11 +9,13 @@ const ATTACK_TURN_FRAMES: int = 3
 # --- Health ---
 var max_health: int = 4
 var health: int = max_health
+signal health_changed(new_health: int, max_health: int)
 
 # --- Coins ---
 var coins: int = 0
+signal coins_changed(new_total_coins)
 
-# --- Movement tuning ---
+# --- Movement ---
 var accel: float = 6000.0
 var decel: float = 5000.0
 var air_control: float = 0.85
@@ -55,19 +57,18 @@ var last_input_direction: float = 1.0
 var was_on_floor: bool = false
 var facing_locked: bool = false
 var locked_direction: bool = false
+var spawn_position: Vector2
 
 func _ready():
-	player_trigger.add_to_group("player_trigger")
-	# Reset coins and health on respawn
-	coins = 0
-	health = max_health
-	print("Player respawned. Coins:", coins, "Health:", health)
+	player_trigger.add_to_group("player")
+	spawn_position = global_position
 
 func _physics_process(delta: float) -> void:
 	if is_dead:
 		velocity = Vector2.ZERO
 		return
 
+	# --- Movement ---
 	var direction = Input.get_axis("ui_left", "ui_right")
 	if direction != 0:
 		last_input_direction = direction
@@ -125,6 +126,7 @@ func _physics_process(delta: float) -> void:
 		facing_locked = false
 		_set_facing(last_input_direction < 0)
 
+	# Move
 	move_and_slide()
 	was_on_floor = is_on_floor()
 
@@ -167,33 +169,42 @@ func take_damage(amount: int):
 		return
 	health -= amount
 	health = clamp(health, 0, max_health)
+	emit_signal("health_changed", health, max_health)
 	if health <= 0:
 		_die()
 
 func _die():
+	if is_dead:
+		return
 	is_dead = true
+
+	# Show empty hearts immediately
+	health = 0
+	emit_signal("health_changed", health, max_health)
+
+	# Reset coins immediately
+	coins = 0
+	emit_signal("coins_changed", coins)
+
 	_show_only(death_sprite)
 	death_sprite.play("death")
 	death_sprite.animation_finished.connect(_on_death_finished, CONNECT_ONE_SHOT)
 
+	# Reset all coins on the map
+	for coin in get_tree().get_nodes_in_group("coins"):
+		coin.show()
+		if coin.has_node("CollisionShape2D"):
+			coin.get_node("CollisionShape2D").disabled = false
+
 func _on_death_finished():
-	# Immediately show 0 health on HUD
-	health = 0
-	if has_node("/root/HUD"):  # assuming your HUD node is autoloaded or at root
-		var hud = get_node("/root/HUD")
-		if hud.has_method("update_hearts"):
-			hud.update_hearts(health, max_health)
-	
-	# Reset coins
-	coins = 0
-	
-	# Reset health for next spawn
+	# Reset health
 	health = max_health
+	emit_signal("health_changed", health, max_health)
+
+	# Reset player position
+	global_position = spawn_position
+
 	is_dead = false
-
-	# Reload the scene
-	get_tree().reload_current_scene()
-
 
 # --- Coins ---
 func add_coin():
@@ -201,6 +212,7 @@ func add_coin():
 		return
 	coins += 1
 	print("Player picked up coin, total now:", coins)
+	emit_signal("coins_changed", coins)
 
 # --- Helpers ---
 func _set_facing(flip_h: bool) -> void:

@@ -166,16 +166,16 @@ position_smoothing_enabled = true
 
 [node name="Coins" type="Node" parent="."]
 
-[node name="Coin" parent="Coins" instance=ExtResource("4_duhbp")]
+[node name="Coin" parent="Coins" groups=["coins"] instance=ExtResource("4_duhbp")]
 position = Vector2(110, -17)
 
-[node name="Coin2" parent="Coins" instance=ExtResource("4_duhbp")]
+[node name="Coin2" parent="Coins" groups=["coins"] instance=ExtResource("4_duhbp")]
 position = Vector2(134, -17)
 
-[node name="Coin3" parent="Coins" instance=ExtResource("4_duhbp")]
+[node name="Coin3" parent="Coins" groups=["coins"] instance=ExtResource("4_duhbp")]
 position = Vector2(156, -17)
 
-[node name="Coin4" parent="Coins" instance=ExtResource("4_duhbp")]
+[node name="Coin4" parent="Coins" groups=["coins"] instance=ExtResource("4_duhbp")]
 position = Vector2(670, -33)
 
 [node name="Platforms" type="Node" parent="."]
