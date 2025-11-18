@@ -9,11 +9,9 @@ const ATTACK_TURN_FRAMES: int = 3
 # --- Health ---
 var max_health: int = 4
 var health: int = max_health
-signal health_changed(new_health: int, max_health: int)
 
 # --- Coins ---
 var coins: int = 0
-signal coins_changed(new_total_coins)
 
 # --- Movement tuning ---
 var accel: float = 6000.0
@@ -60,8 +58,9 @@ var locked_direction: bool = false
 
 func _ready():
 	player_trigger.add_to_group("player_trigger")
-	emit_signal("coins_changed", coins)
-	emit_signal("health_changed", health, max_health)
+	# Initialize player stats
+	coins = 0
+	health = max_health
 
 func _physics_process(delta: float) -> void:
 	if is_dead:
@@ -168,10 +167,8 @@ func _on_attack_finished():
 func take_damage(amount: int):
 	if is_dead:
 		return
-
 	health -= amount
-	emit_signal("health_changed", health, max_health)
-
+	health = clamp(health, 0, max_health)
 	if health <= 0:
 		_die()
 
@@ -182,18 +179,26 @@ func _die():
 	death_sprite.animation_finished.connect(_on_death_finished, CONNECT_ONE_SHOT)
 
 func _on_death_finished():
+	# Reset stats for HUD to see immediately
 	coins = 0
-	emit_signal("coins_changed", coins)
+	print("Player died, coins reset to:", coins)
+
+	# Update HUD manually (optional if HUD is reading player.coins in _process)
+	# HUD will see the 0 in this frame before scene reload
+
 	health = max_health
-	emit_signal("health_changed", health, max_health)
+	is_dead = false
+
+	# Reload scene
 	get_tree().reload_current_scene()
+
 
 # --- Coins ---
 func add_coin():
 	if is_dead:
 		return
 	coins += 1
-	emit_signal("coins_changed", coins)
+	print("Player picked up coin, total now:", coins)
 
 # --- Helpers ---
 func _set_facing(flip_h: bool) -> void:
