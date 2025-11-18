@@ -20,7 +20,7 @@ var air_control: float = 0.85
 var attack_move_mult: float = 0.45
 var landing_boost_mult: float = 1.1
 
-# --- Gravity tuning ---
+# --- Gravity ---
 var gravity: float = ProjectSettings.get_setting("physics/2d/default_gravity")
 var fall_multiplier: float = 2.0
 var low_jump_multiplier: float = 1.3
@@ -58,16 +58,16 @@ var locked_direction: bool = false
 
 func _ready():
 	player_trigger.add_to_group("player_trigger")
-	# Initialize player stats
+	# Reset coins and health on respawn
 	coins = 0
 	health = max_health
+	print("Player respawned. Coins:", coins, "Health:", health)
 
 func _physics_process(delta: float) -> void:
 	if is_dead:
 		velocity = Vector2.ZERO
 		return
 
-	# --- Movement ---
 	var direction = Input.get_axis("ui_left", "ui_right")
 	if direction != 0:
 		last_input_direction = direction
@@ -99,8 +99,7 @@ func _physics_process(delta: float) -> void:
 		velocity.y *= apex_damping
 
 	# Landing boost
-	var just_landed = (not was_on_floor) and is_on_floor()
-	if just_landed:
+	if (not was_on_floor) and is_on_floor():
 		velocity.x *= landing_boost_mult
 
 	# Horizontal movement
@@ -126,7 +125,6 @@ func _physics_process(delta: float) -> void:
 		facing_locked = false
 		_set_facing(last_input_direction < 0)
 
-	# Move
 	move_and_slide()
 	was_on_floor = is_on_floor()
 
@@ -179,17 +177,21 @@ func _die():
 	death_sprite.animation_finished.connect(_on_death_finished, CONNECT_ONE_SHOT)
 
 func _on_death_finished():
-	# Reset stats for HUD to see immediately
+	# Immediately show 0 health on HUD
+	health = 0
+	if has_node("/root/HUD"):  # assuming your HUD node is autoloaded or at root
+		var hud = get_node("/root/HUD")
+		if hud.has_method("update_hearts"):
+			hud.update_hearts(health, max_health)
+	
+	# Reset coins
 	coins = 0
-	print("Player died, coins reset to:", coins)
-
-	# Update HUD manually (optional if HUD is reading player.coins in _process)
-	# HUD will see the 0 in this frame before scene reload
-
+	
+	# Reset health for next spawn
 	health = max_health
 	is_dead = false
 
-	# Reload scene
+	# Reload the scene
 	get_tree().reload_current_scene()
 
 
