@@ -32,18 +32,35 @@ func _find_player():
 	if players.size() == 0:
 		call_deferred("_find_player")
 		return
+
 	player = players[0]
 
+	# Connect player signals
+	if player.has_signal("coins_changed"):
+		player.connect("coins_changed", Callable(self, "_on_coins_changed"))
+	if player.has_signal("health_changed"):
+		player.connect("health_changed", Callable(self, "_on_health_changed"))
+
+	# Initialize UI
+	_on_coins_changed(player.coins)
+	_on_health_changed(player.health, player.max_health)
+
+# --- Signal callbacks ---
+func _on_coins_changed(new_coins: int):
+	update_coins(new_coins)
+
+func _on_health_changed(current_health: int, max_health: int):
+	update_hearts(current_health, max_health)
+
+# Optional: keep _process if you want smooth heart updates per frame
 func _process(delta):
 	if player:
-		update_coins(player.coins)
 		update_hearts(player.health, player.max_health)
 
 # --- Update functions ---
 func update_hearts(current_health: int, max_health: int):
-	# Reverse the order so hearts empty from right to left
 	for i in range(hearts.size()):
-		var heart = hearts[hearts.size() - 1 - i]
+		var heart = hearts[hearts.size() - 1 - i]  # reverse for right-to-left depletion
 		if i < current_health:
 			heart.texture = little_full
 		else:

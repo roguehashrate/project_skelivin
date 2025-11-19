@@ -378,12 +378,13 @@ collision_layer = 2
 script = ExtResource("1_g2els")
 
 [node name="player_trigger" type="Area2D" parent="." groups=["player_trigger"]]
+position = Vector2(0, -5)
 collision_layer = 2
 collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="player_trigger"]
 visibility_layer = 3
-position = Vector2(0, -8.5)
+position = Vector2(0, -3)
 shape = SubResource("RectangleShape2D_fjrip")
 
 [node name="walk" type="AnimatedSprite2D" parent="." groups=["player"]]

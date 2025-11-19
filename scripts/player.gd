@@ -15,6 +15,10 @@ signal health_changed(new_health: int, max_health: int)
 var coins: int = 0
 signal coins_changed(new_total_coins)
 
+# --- Gems ---
+var gems: int = 0
+signal gems_changed(new_total_gems)
+
 # --- Movement ---
 var accel: float = 6000.0
 var decel: float = 5000.0
@@ -182,7 +186,7 @@ func _die():
 	health = 0
 	emit_signal("health_changed", health, max_health)
 
-	# Reset coins immediately
+	# Reset coins only
 	coins = 0
 	emit_signal("coins_changed", coins)
 
@@ -190,10 +194,15 @@ func _die():
 	death_sprite.play("death")
 	death_sprite.animation_finished.connect(_on_death_finished, CONNECT_ONE_SHOT)
 
-	# Reset all coins on the map
+	# Reset all coins
 	for coin in get_tree().get_nodes_in_group("coins"):
 		if coin.has_method("reset_coin"):
 			coin.reset_coin()
+
+	# Reset all enemies in the level
+	for enemy in get_tree().get_nodes_in_group("enemies"):
+		if enemy.has_method("reset_enemy"):
+			enemy.reset_enemy()
 
 
 func _on_death_finished():
@@ -214,6 +223,23 @@ func add_coin():
 	print("Player picked up coin, total now:", coins)
 	emit_signal("coins_changed", coins)
 
+# --- Gems ---
+func add_gem():
+	if is_dead:
+		return
+	gems += 1
+	print("Player picked up gem, total now:", gems)
+	emit_signal("gems_changed", gems)
+
+# --- Reset coins for level ---
+func reset_coins_for_level():
+	coins = 0
+	emit_signal("coins_changed", coins)
+
+	for coin in get_tree().get_nodes_in_group("coins"):
+		if coin.has_method("reset_coin"):
+			coin.reset_coin()
+
 # --- Helpers ---
 func _set_facing(flip_h: bool) -> void:
 	walk_sprite.flip_h = flip_h
@@ -231,3 +257,25 @@ func _show_only(sprite_to_show: AnimatedSprite2D) -> void:
 	death_sprite.visible = false
 	sprite_to_show.visible = true
 	sprite_to_show.play(sprite_to_show.animation)
+	
+func start_level():
+	# Fully reset health
+	health = max_health
+	emit_signal("health_changed", health, max_health)
+
+	# Coins reset for every level
+	coins = 0
+	emit_signal("coins_changed", coins)
+
+	# DO NOT reset gems (they persist)
+	# gems stay as they are
+
+	# Reset coins in scene
+	for coin in get_tree().get_nodes_in_group("coins"):
+		if coin.has_method("reset_coin"):
+			coin.reset_coin()
+
+	# Reset enemies in scene
+	for enemy in get_tree().get_nodes_in_group("enemies"):
+		if enemy.has_method("reset_enemy"):
+			enemy.reset_enemy()

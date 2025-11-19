@@ -10,7 +10,12 @@ extends Area2D
 #		var next_lv_path = FILE_BEGIN + str(next_lv_num) + ".tscn"
 #		print(next_lv_path)
 func _on_body_entered(body: Node) -> void:
-	print(body)
 	if body.is_in_group("player"):
 		print("PLAYER GOES TO NEXT LEVEL")
+		
+		# Reset coins and gems on the player before changing the level
+		if body.has_method("start_level"):
+			body.start_level()
+
+		# Change to the next level
 		get_tree().change_scene_to_file("res://scenes/levels/lv_2.tscn")

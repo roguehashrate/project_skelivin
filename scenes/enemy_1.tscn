@@ -338,7 +338,7 @@ animations = [{
 radius = 5.0
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_d3026"]
-radius = 6.0000005
+radius = 3.9999995
 height = 15.999999
 
 [node name="enemy_1" type="CharacterBody2D" groups=["enemies"]]
@@ -383,6 +383,6 @@ script = ExtResource("2_a1412")
 visible_in_game = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="damage_box"]
-position = Vector2(2, 0)
+position = Vector2(2, 1)
 rotation = 1.5707964
 shape = SubResource("CapsuleShape2D_d3026")

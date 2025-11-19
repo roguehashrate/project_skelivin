@@ -2,6 +2,7 @@ extends Area2D
 
 @onready var sprite = $Sprite
 @onready var collision = $CollisionShape2D
+@onready var audio_player = $gem_pickup
 
 var picked_up: bool = false  # Track if gem has been collected
 
@@ -16,6 +17,8 @@ func _on_body_entered(body):
 		picked_up = true
 		hide()
 		collision.disabled = true
+		if audio_player:
+			audio_player.play()
 
 func reset_gem():
 	picked_up = false

@@ -3,9 +3,9 @@ extends CharacterBody2D
 # --- Constants ---
 const ATTACK_RANGE = 20
 const HIT_FRAME = 6
-const PATROL_SPEED = 70
+const PATROL_SPEED = 60
 const CHASE_SPEED = 90
-const DETECTION_RANGE = 70
+const DETECTION_RANGE = 40
 const STOP_DISTANCE = 20
 const GRAVITY = 800
 
