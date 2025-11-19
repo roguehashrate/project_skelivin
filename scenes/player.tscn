@@ -1,4 +1,4 @@
-[gd_scene load_steps=61 format=3 uid="uid://cgjj2bmatef67"]
+[gd_scene load_steps=62 format=3 uid="uid://cgjj2bmatef67"]
 
 [ext_resource type="Texture2D" uid="uid://cgdx10ywkbv4h" path="res://assets/Enemy_Animations_Set/enemies-skeleton2_idle.png" id="1_3vyb7"]
 [ext_resource type="Script" uid="uid://rq1sw5se0i57" path="res://scripts/player.gd" id="1_g2els"]
@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://tujel7bo71xj" path="res://assets/Enemy_Animations_Set/enemies-skeleton2_death.png" id="5_fjrip"]
 [ext_resource type="PackedScene" uid="uid://qfuoxa8e4b6" path="res://scenes/killzone.tscn" id="5_tuyoq"]
 [ext_resource type="Script" uid="uid://ci3c6yai8wi5d" path="res://scripts/damage_box.gd" id="6_fjrip"]
+[ext_resource type="AudioStream" uid="uid://b3ojq6mh52yws" path="res://assets/audio/hit.wav" id="8_smehm"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_fjrip"]
 size = Vector2(8, 13)
@@ -426,3 +427,7 @@ visible_in_game = true
 [node name="CollisionShape2D" type="CollisionShape2D" parent="damage_box"]
 rotation = 1.5707964
 shape = SubResource("CapsuleShape2D_smehm")
+
+[node name="hit_sound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("8_smehm")
+bus = &"Player Hit"

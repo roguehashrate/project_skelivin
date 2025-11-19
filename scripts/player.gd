@@ -48,6 +48,7 @@ var jump_buffer_timer: float = 0.0
 @onready var death_sprite: AnimatedSprite2D = $death
 @onready var player_trigger: Area2D = $player_trigger
 @onready var damage_box: Area2D = $damage_box
+@onready var audio_player = $hit_sound
 
 # --- Player state ---
 var is_attacking: bool = false
@@ -161,6 +162,7 @@ func start_attack():
 	hit_done = false
 	_show_only(attack_sprite)
 	attack_sprite.play("attack")
+	audio_player.play()
 	attack_sprite.animation_finished.connect(_on_attack_finished, CONNECT_ONE_SHOT)
 
 func _on_attack_finished():

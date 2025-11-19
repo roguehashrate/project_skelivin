@@ -2,7 +2,6 @@ extends CanvasLayer
 
 # --- Preloads ---
 var little_full = preload("res://assets/Rocky Roads/UI/little_heart.png")
-var big_full = preload("res://assets/Rocky Roads/UI/big_heart.png")
 var empty_heart = preload("res://assets/Rocky Roads/UI/empty_heart.png")
 
 var number_textures = [
@@ -24,24 +23,26 @@ var number_textures = [
 
 var player: Node = null
 
-func _ready():
-	call_deferred("_find_player")
+func _process(delta):
+	# Auto-find the player if we don't have one or it's no longer in the scene tree
+	if not player or not player.is_inside_tree():
+		_find_player()
 
+# --- Find and connect to player ---
 func _find_player():
 	var players = get_tree().get_nodes_in_group("player")
 	if players.size() == 0:
-		call_deferred("_find_player")
-		return
+		return  # no player yet, try again next frame
 
 	player = players[0]
 
-	# Connect player signals
+	# Connect signals
 	if player.has_signal("coins_changed"):
 		player.connect("coins_changed", Callable(self, "_on_coins_changed"))
 	if player.has_signal("health_changed"):
 		player.connect("health_changed", Callable(self, "_on_health_changed"))
 
-	# Initialize UI
+	# Initialize UI immediately
 	_on_coins_changed(player.coins)
 	_on_health_changed(player.health, player.max_health)
 
@@ -52,19 +53,11 @@ func _on_coins_changed(new_coins: int):
 func _on_health_changed(current_health: int, max_health: int):
 	update_hearts(current_health, max_health)
 
-# Optional: keep _process if you want smooth heart updates per frame
-func _process(delta):
-	if player:
-		update_hearts(player.health, player.max_health)
-
 # --- Update functions ---
 func update_hearts(current_health: int, max_health: int):
 	for i in range(hearts.size()):
 		var heart = hearts[hearts.size() - 1 - i]  # reverse for right-to-left depletion
-		if i < current_health:
-			heart.texture = little_full
-		else:
-			heart.texture = empty_heart
+		heart.texture = little_full if i < current_health else empty_heart
 
 func update_coins(coin_count: int):
 	coin_count = clamp(coin_count, 0, 99)
