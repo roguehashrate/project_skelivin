@@ -57,6 +57,7 @@ var hit_done: bool = false
 var is_dead: bool = false
 var facing_right: bool = true
 var last_input_direction: float = 1.0
+var can_move: bool = true
 
 # --- Helpers ---
 var was_on_floor: bool = false
