@@ -18,16 +18,34 @@ var player: Node = null
 # --- UI NODES ---
 @onready var popup := $ShopUI/PopupPanel
 @onready var grid := $ShopUI/PopupPanel/MarginContainer/GridContainer
-@onready var gem_label := $ShopUI/PopupPanel/MarginContainer/GemDisplay/HBoxContainer/GemCountLabel
+@onready var gem_display := $ShopUI/PopupPanel/MarginContainer/GemDisplay
+@onready var gem_hbox := gem_display.get_node("HBoxContainer")
+@onready var gem_label := gem_hbox.get_node("GemCountLabel")
+@onready var gem_icon := gem_hbox.get_node("GemIcon")
+
 
 # --- READY ---
 func _ready():
-	print("gem_label: ", gem_label)
 	popup.hide()
 	grid.columns = 3
+	grid.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
 	_populate_shop()
+
 	connect("body_entered", Callable(self, "_on_body_entered"))
 	connect("body_exited", Callable(self, "_on_body_exited"))
+
+	# --- GEM DISPLAY POLISH ---
+	if gem_icon:
+		gem_icon.custom_minimum_size = Vector2(48, 48)
+		gem_icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+
+	if gem_label:
+		# Preferred: assign a DynamicFont in the inspector with size ~32
+		gem_label.add_theme_font_size_override("font_size", 32)
+
+	if gem_display:
+		# Slightly move gem display for offset
+		gem_display.position += Vector2(20, 5)
 
 # --- ENTER/EXIT ---
 func _on_body_entered(body: Node) -> void:
@@ -35,7 +53,7 @@ func _on_body_entered(body: Node) -> void:
 		player = body
 		popup.popup_centered()
 		_update_gem_display()
-		player.can_move = false  # safe because it always exists
+		player.can_move = false
 
 func _on_body_exited(body: Node) -> void:
 	if body == player:
@@ -45,7 +63,7 @@ func _on_body_exited(body: Node) -> void:
 
 # --- UPDATE GEM LABEL ---
 func _update_gem_display():
-	if player:
+	if player and gem_label:
 		gem_label.text = str(player.gems)
 
 func _process(delta):
@@ -73,7 +91,7 @@ func _populate_shop() -> void:
 		var label := Label.new()
 		label.text = "%sC %sG" % [item.cost_coins, item.cost_gems]
 		label.custom_minimum_size = Vector2(220, 50)
-		label.horizontal_alignment = 1  # CENTER, works in Godot 4.5
+		label.horizontal_alignment = 1  # 1 = CENTER
 		vbox.add_child(label)
 
 		grid.add_child(vbox)

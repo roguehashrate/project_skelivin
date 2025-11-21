@@ -33,10 +33,6 @@ theme_override_constants/margin_top = 8
 theme_override_constants/margin_right = 8
 theme_override_constants/margin_bottom = 8
 
-[node name="GridContainer" type="GridContainer" parent="ShopUI/PopupPanel/MarginContainer"]
-layout_mode = 2
-columns = 3
-
 [node name="GemDisplay" type="Control" parent="ShopUI/PopupPanel/MarginContainer"]
 layout_mode = 2
 
@@ -44,11 +40,16 @@ layout_mode = 2
 layout_mode = 0
 offset_right = 19.0
 offset_bottom = 23.0
+theme_override_constants/separation = 12
 
-[node name="TextureRect" type="TextureRect" parent="ShopUI/PopupPanel/MarginContainer/GemDisplay/HBoxContainer"]
+[node name="GemIcon" type="TextureRect" parent="ShopUI/PopupPanel/MarginContainer/GemDisplay/HBoxContainer"]
 layout_mode = 2
 texture = ExtResource("2_ec5oe")
 stretch_mode = 2
 
 [node name="GemCountLabel" type="Label" parent="ShopUI/PopupPanel/MarginContainer/GemDisplay/HBoxContainer"]
 layout_mode = 2
+
+[node name="GridContainer" type="GridContainer" parent="ShopUI/PopupPanel/MarginContainer"]
+layout_mode = 2
+columns = 3
