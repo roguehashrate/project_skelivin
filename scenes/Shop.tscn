@@ -1,105 +1,47 @@
-[gd_scene load_steps=7 format=3 uid="uid://624jhp4giv7v"]
+[gd_scene load_steps=4 format=3 uid="uid://624jhp4giv7v"]
 
 [ext_resource type="Script" uid="uid://qvr3r5y8bu5l" path="res://scripts/shop.gd" id="1_rgcs7"]
-[ext_resource type="FontFile" uid="uid://db01s7x6r0c1q" path="res://assets/BoldPixels.ttf" id="2_ec5oe"]
+[ext_resource type="Texture2D" uid="uid://ccte0h8a05kw1" path="res://assets/gem-logo.png" id="2_ec5oe"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_rgcs7"]
-size = Vector2(134, 71.5)
 
-[sub_resource type="Theme" id="Theme_t4md6"]
-default_font = ExtResource("2_ec5oe")
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ec5oe"]
-bg_color = Color(0.28235295, 0.19215687, 0.07450981, 0.7372549)
-corner_radius_top_left = 20
-corner_radius_top_right = 20
-corner_radius_bottom_right = 20
-corner_radius_bottom_left = 20
-
-[sub_resource type="Theme" id="Theme_ec5oe"]
-default_font = ExtResource("2_ec5oe")
-default_font_size = 30
-
-[node name="Shop" type="Area2D"]
+[node name="ShopZone" type="Area2D"]
 collision_layer = 2
 collision_mask = 2
 script = ExtResource("1_rgcs7")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(68, 37.25)
 shape = SubResource("RectangleShape2D_rgcs7")
 
 [node name="ShopUI" type="CanvasLayer" parent="."]
+visible = false
 
-[node name="Panel" type="Panel" parent="ShopUI"]
-anchors_preset = -1
-anchor_left = 0.19560261
-anchor_right = 1.0181105
-anchor_bottom = 0.81666666
-offset_left = -295.557
-offset_right = -97.55701
-offset_bottom = 198.0
-grow_horizontal = 2
-size_flags_horizontal = 4
-theme = SubResource("Theme_t4md6")
-theme_override_styles/panel = SubResource("StyleBoxFlat_ec5oe")
-metadata/_edit_use_anchors_ = true
+[node name="PopupPanel" type="PopupPanel" parent="ShopUI"]
+initial_position = 1
+size = Vector2i(328, 200)
 
-[node name="TitleLabel" type="Label" parent="ShopUI/Panel"]
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -36.0
-offset_right = 36.0
-offset_bottom = 32.0
-grow_horizontal = 2
-theme_override_font_sizes/font_size = 64
-text = "SHOP"
+[node name="MarginContainer" type="MarginContainer" parent="ShopUI/PopupPanel"]
+custom_minimum_size = Vector2(480, 300)
+offset_left = 4.0
+offset_top = 4.0
+offset_right = 484.0
+offset_bottom = 304.0
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
 
-[node name="ItemList" type="VBoxContainer" parent="ShopUI/Panel"]
-layout_mode = 0
-offset_left = 248.0
-offset_top = 144.0
-offset_right = 1508.4166
-offset_bottom = 1000.0
-theme = SubResource("Theme_ec5oe")
+[node name="GridContainer" type="GridContainer" parent="ShopUI/PopupPanel/MarginContainer"]
+layout_mode = 2
+columns = 3
 
-[node name="ExitButton" type="Button" parent="ShopUI/Panel"]
-layout_mode = 0
-offset_left = 1576.0
-offset_top = 960.0
-offset_right = 1697.0
-offset_bottom = 1028.0
-theme_override_font_sizes/font_size = 60
-text = "Exit"
+[node name="HBoxContainer" type="HBoxContainer" parent="ShopUI/PopupPanel/MarginContainer"]
+layout_mode = 2
 
-[node name="CoinsLabel" type="Label" parent="ShopUI/Panel"]
-layout_mode = 1
-anchors_preset = 4
-anchor_top = 0.5
-anchor_bottom = 0.5
-offset_left = 56.0
-offset_top = -484.0
-offset_right = 195.0
-offset_bottom = -424.0
-grow_vertical = 2
-theme_override_font_sizes/font_size = 60
-text = "Coins"
-horizontal_alignment = 1
+[node name="TextureRect" type="TextureRect" parent="ShopUI/PopupPanel/MarginContainer/HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("2_ec5oe")
+stretch_mode = 2
 
-[node name="GemLabel" type="Label" parent="ShopUI/Panel"]
-layout_mode = 1
-anchors_preset = 6
-anchor_left = 1.0
-anchor_top = 0.5
-anchor_right = 1.0
-anchor_bottom = 0.5
-offset_left = -193.21521
-offset_top = -468.0
-offset_right = -73.21521
-offset_bottom = -408.0
-grow_horizontal = 0
-grow_vertical = 2
-theme_override_font_sizes/font_size = 60
-text = "Gems"
+[node name="GemCountLabel" type="Label" parent="ShopUI/PopupPanel/MarginContainer/HBoxContainer"]
+layout_mode = 2
