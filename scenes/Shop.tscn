@@ -21,11 +21,13 @@ initial_position = 1
 size = Vector2i(328, 200)
 
 [node name="MarginContainer" type="MarginContainer" parent="ShopUI/PopupPanel"]
-custom_minimum_size = Vector2(480, 300)
-offset_left = 4.0
-offset_top = 4.0
-offset_right = 484.0
-offset_bottom = 304.0
+custom_minimum_size = Vector2(1000, 600)
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -1000.0
+offset_bottom = 600.0
+grow_horizontal = 0
 theme_override_constants/margin_left = 8
 theme_override_constants/margin_top = 8
 theme_override_constants/margin_right = 8
@@ -35,13 +37,18 @@ theme_override_constants/margin_bottom = 8
 layout_mode = 2
 columns = 3
 
-[node name="HBoxContainer" type="HBoxContainer" parent="ShopUI/PopupPanel/MarginContainer"]
+[node name="GemDisplay" type="Control" parent="ShopUI/PopupPanel/MarginContainer"]
 layout_mode = 2
 
-[node name="TextureRect" type="TextureRect" parent="ShopUI/PopupPanel/MarginContainer/HBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="ShopUI/PopupPanel/MarginContainer/GemDisplay"]
+layout_mode = 0
+offset_right = 19.0
+offset_bottom = 23.0
+
+[node name="TextureRect" type="TextureRect" parent="ShopUI/PopupPanel/MarginContainer/GemDisplay/HBoxContainer"]
 layout_mode = 2
 texture = ExtResource("2_ec5oe")
 stretch_mode = 2
 
-[node name="GemCountLabel" type="Label" parent="ShopUI/PopupPanel/MarginContainer/HBoxContainer"]
+[node name="GemCountLabel" type="Label" parent="ShopUI/PopupPanel/MarginContainer/GemDisplay/HBoxContainer"]
 layout_mode = 2
