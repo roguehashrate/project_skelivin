@@ -101,6 +101,15 @@ func _attempt_buy(item: Dictionary) -> void:
 	if not player:
 		return
 
+	# Special case: shiny_swap
+	if item.id == "shiny_swap":
+		if player.coins >= 5:
+			_apply_effect(item)
+		else:
+			print("Not enough coins for Shiny Swap")
+		return
+
+	# Normal items
 	if player.coins >= item.cost_coins and player.gems >= item.cost_gems:
 		player.coins -= item.cost_coins
 		player.gems -= item.cost_gems
@@ -124,6 +133,8 @@ func _apply_effect(item: Dictionary) -> void:
 		"speed_up":
 			player.speed_multiplier *= 1.2
 		"shiny_swap":
-			player.gems += 1
+			if player.coins >= 5:
+				player.coins -= 5
+				player.gems += 1
 		"golden_drop":
 			player.unlock_golden_drop()
