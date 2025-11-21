@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://624jhp4giv7v"]
+[gd_scene load_steps=7 format=3 uid="uid://624jhp4giv7v"]
 
 [ext_resource type="Script" uid="uid://qvr3r5y8bu5l" path="res://scripts/shop.gd" id="1_rgcs7"]
 [ext_resource type="FontFile" uid="uid://db01s7x6r0c1q" path="res://assets/BoldPixels.ttf" id="2_ec5oe"]
@@ -10,11 +10,15 @@ size = Vector2(134, 71.5)
 default_font = ExtResource("2_ec5oe")
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ec5oe"]
-bg_color = Color(0.023529412, 0.09411765, 0.105882354, 0.9529412)
-corner_radius_top_left = 30
-corner_radius_top_right = 30
-corner_radius_bottom_right = 30
-corner_radius_bottom_left = 30
+bg_color = Color(0.28235295, 0.19215687, 0.07450981, 0.7372549)
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+
+[sub_resource type="Theme" id="Theme_ec5oe"]
+default_font = ExtResource("2_ec5oe")
+default_font_size = 30
 
 [node name="Shop" type="Area2D"]
 collision_layer = 2
@@ -29,11 +33,11 @@ shape = SubResource("RectangleShape2D_rgcs7")
 
 [node name="Panel" type="Panel" parent="ShopUI"]
 anchors_preset = -1
-anchor_left = 0.38072917
-anchor_right = 0.81927085
-anchor_bottom = 0.40185186
-offset_left = -234.0
-offset_right = -36.0
+anchor_left = 0.19560261
+anchor_right = 1.0181105
+anchor_bottom = 0.81666666
+offset_left = -295.557
+offset_right = -97.55701
 offset_bottom = 198.0
 grow_horizontal = 2
 size_flags_horizontal = 4
@@ -50,23 +54,24 @@ offset_left = -36.0
 offset_right = 36.0
 offset_bottom = 32.0
 grow_horizontal = 2
-theme_override_font_sizes/font_size = 32
+theme_override_font_sizes/font_size = 64
 text = "SHOP"
 
 [node name="ItemList" type="VBoxContainer" parent="ShopUI/Panel"]
 layout_mode = 0
-offset_left = 314.0
-offset_top = 128.0
-offset_right = 716.1666
-offset_bottom = 432.0
+offset_left = 248.0
+offset_top = 144.0
+offset_right = 1508.4166
+offset_bottom = 1000.0
+theme = SubResource("Theme_ec5oe")
 
 [node name="ExitButton" type="Button" parent="ShopUI/Panel"]
 layout_mode = 0
-offset_left = 960.0
-offset_top = 584.0
-offset_right = 1036.0
-offset_bottom = 628.0
-theme_override_font_sizes/font_size = 36
+offset_left = 1576.0
+offset_top = 960.0
+offset_right = 1697.0
+offset_bottom = 1028.0
+theme_override_font_sizes/font_size = 60
 text = "Exit"
 
 [node name="CoinsLabel" type="Label" parent="ShopUI/Panel"]
@@ -74,11 +79,12 @@ layout_mode = 1
 anchors_preset = 4
 anchor_top = 0.5
 anchor_bottom = 0.5
-offset_top = -16.0
-offset_right = 74.0
-offset_bottom = 16.0
+offset_left = 56.0
+offset_top = -484.0
+offset_right = 195.0
+offset_bottom = -424.0
 grow_vertical = 2
-theme_override_font_sizes/font_size = 32
+theme_override_font_sizes/font_size = 60
 text = "Coins"
 horizontal_alignment = 1
 
@@ -89,10 +95,11 @@ anchor_left = 1.0
 anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 0.5
-offset_left = -64.0
-offset_top = -16.0
-offset_bottom = 16.0
+offset_left = -193.21521
+offset_top = -468.0
+offset_right = -73.21521
+offset_bottom = -408.0
 grow_horizontal = 0
 grow_vertical = 2
-theme_override_font_sizes/font_size = 32
+theme_override_font_sizes/font_size = 60
 text = "Gems"
